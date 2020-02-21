@@ -96,9 +96,9 @@ var listMajors = auth => {
       if (rows.length) {
         rows.map(row => {
           var data = {
-            image: row[0],
+            photo: row[0],
             name: row[1],
-            tagLine: row[2],
+            testimonial: row[2],
             company: row[3],
             profile: row[4]
           };
