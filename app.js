@@ -50,14 +50,14 @@ function authorize(credentials, callback) {
 function getNewToken(oAuth2Client, callback) {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
-    scope: SCOPES
+    scope: SCOPES,
   });
   console.log("Authorize this app by visiting this url:", authUrl);
   const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
   });
-  rl.question("Enter the code from that page here: ", code => {
+  rl.question("Enter the code from that page here: ", (code) => {
     rl.close();
     oAuth2Client.getToken(code, (err, token) => {
       if (err)
@@ -67,7 +67,7 @@ function getNewToken(oAuth2Client, callback) {
         );
       oAuth2Client.setCredentials(token);
       // Store the token to disk for later program executions
-      fs.writeFile(TOKEN_PATH, JSON.stringify(token), err => {
+      fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
         if (err) return console.error(err);
         console.log("Token stored to", TOKEN_PATH);
       });
@@ -82,28 +82,25 @@ function getNewToken(oAuth2Client, callback) {
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
 
-var listMajors = auth => {
+var listMajors = (auth) => {
   const sheets = google.sheets({ version: "v4", auth });
   sheets.spreadsheets.values.get(
     {
-      spreadsheetId: "1K5y2w3rNgk-lBCMK4SPVj2_hn21djx4N4iiZbgcpjEs",
-      range: "Sheet1!A2:E"
+      spreadsheetId: "14swzXAAXnNCz7TPy0YHgjHUoqfvQx8hUqbO-OZSmerM",
+      range: "Sheet1!A2:B",
     },
     (err, res) => {
       if (err) return console.log("The API returned an error: " + err);
       const rows = res.data.values;
       const dataArray = [];
       if (rows.length) {
-        rows.map(row => {
+        rows.map((row) => {
           var data = {
-            photo: row[0],
-            name: row[1],
-            testimonial: row[2],
-            company: row[3],
-            profile: row[4]
+            question: row[0],
+            answer: row[1],
           };
           dataArray.push(data);
-          app.get("/interns-success", (req, res) => {
+          app.get("/faq", (req, res) => {
             res.json(dataArray);
           });
         });
