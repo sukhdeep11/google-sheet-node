@@ -86,8 +86,8 @@ var listMajors = (auth) => {
   const sheets = google.sheets({ version: "v4", auth });
   sheets.spreadsheets.values.get(
     {
-      spreadsheetId: "14swzXAAXnNCz7TPy0YHgjHUoqfvQx8hUqbO-OZSmerM",
-      range: "Sheet1!A2:B",
+      spreadsheetId: "1Xz5EgflgKb84P-9FQmu0svd2-wEKoAJC1gvWVFQvK_A",
+      range: "Sheet1!A2:C",
     },
     (err, res) => {
       if (err) return console.log("The API returned an error: " + err);
@@ -98,6 +98,7 @@ var listMajors = (auth) => {
           var data = {
             question: row[0],
             answer: row[1],
+            image: row[2],
           };
           dataArray.push(data);
           app.get("/faq", (req, res) => {
