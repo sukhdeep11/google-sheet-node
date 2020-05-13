@@ -10,12 +10,19 @@ const readSheet = require('./app')
 
 
 app.get("/testimonials", async (req, res) => {
-    let testimonialArray = []
-    var alumni = await readSheet.readSheet("Mentors!A2:C");
-    testimonialArray.push(alumni);
+    let testimonialObject = {};
+    var alumni = await readSheet.readSheet("Alumni!A2:D");
+    testimonialObject.alumni = alumni;
+    var mentors = await readSheet.readSheet("Mentors!A2:C");
+    testimonialObject.mentors = mentors;
+    var team = await readSheet.readSheet("Team!A2:D");
+    testimonialObject.team = team;
+    var interns = await readSheet.readSheet("Interns!A2:D");
+    testimonialObject.interns = interns;
 
-    console.log(testimonialArray);
-    console.log('jsshsh');
+    res.json({
+        response: testimonialObject
+    })
 
 
 });

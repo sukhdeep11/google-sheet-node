@@ -83,7 +83,8 @@ exports.readSheet = (range) => {
               var data = {
                 name: row[0],
                 company: row[1],
-                photo: row[2]
+                image: row[2],
+                testimonial: row[3],
               };
               testimonialArray.push(data);
             });
