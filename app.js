@@ -86,25 +86,24 @@ var listMajors = auth => {
   const sheets = google.sheets({ version: "v4", auth });
   sheets.spreadsheets.values.get(
     {
-      spreadsheetId: "1K5y2w3rNgk-lBCMK4SPVj2_hn21djx4N4iiZbgcpjEs",
-      range: "Sheet1!A2:E"
+      spreadsheetId: "1tItBL8bojfw1mw-799bJZFIBzeRyt8vzoeOIG9pAgAU",
+      range: "Mentors!A2:C"
     },
     (err, res) => {
       if (err) return console.log("The API returned an error: " + err);
       const rows = res.data.values;
-      const dataArray = [];
+      let testimonialArray = [];
       if (rows.length) {
         rows.map(row => {
           var data = {
-            photo: row[0],
-            name: row[1],
-            testimonial: row[2],
-            company: row[3],
-            profile: row[4]
+            name: row[0],
+            company: row[1],
+            photo: row[2]
           };
-          dataArray.push(data);
-          app.get("/interns-success", (req, res) => {
-            res.json(dataArray);
+          testimonialArray.push(data);
+
+          app.get("/testimonials", (req, res) => {
+            res.json(testimonialArray);
           });
         });
       } else {
